@@ -2,10 +2,11 @@
 
 // Ouput data
 out vec3 color;
+in vec3 fragmentColor;
 
 void main()
 {
 
         // Output color = black
-        color.rgb = vec3(0,0,0);
+        color = fragmentColor;
 }

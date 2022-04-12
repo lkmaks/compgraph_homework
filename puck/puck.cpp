@@ -79,7 +79,7 @@ int main( void )
 
 
 
-    int N_perimeter = 20;
+    int N_perimeter = 200;
     float H = 5;
     float R = 10;
     glm::vec3 center(0, 0, 0);
@@ -97,37 +97,38 @@ int main( void )
     }
 
     int N_triangles = (N_perimeter - 2) * 2 + 2 * N_perimeter;
-    GLfloat triangle_data[N_triangles * 9];
+    GLfloat triangles[N_triangles * 9];
+    GLfloat colors[N_triangles * 9];
 
     int triangle_id = 0;
     for (int i = 1; i < N_perimeter - 1; ++i) {
-        triangle_data[triangle_id * 9] = top_points[0].x;
-        triangle_data[triangle_id * 9 + 1] = top_points[0].y;
-        triangle_data[triangle_id * 9 + 2] = top_points[0].z;
+        triangles[triangle_id * 9] = top_points[0].x;
+        triangles[triangle_id * 9 + 1] = top_points[0].y;
+        triangles[triangle_id * 9 + 2] = top_points[0].z;
 
-        triangle_data[triangle_id * 9 + 3] = top_points[i].x;
-        triangle_data[triangle_id * 9 + 4] = top_points[i].y;
-        triangle_data[triangle_id * 9 + 5] = top_points[i].z;
+        triangles[triangle_id * 9 + 3] = top_points[i].x;
+        triangles[triangle_id * 9 + 4] = top_points[i].y;
+        triangles[triangle_id * 9 + 5] = top_points[i].z;
 
-        triangle_data[triangle_id * 9 + 6] = top_points[i + 1].x;
-        triangle_data[triangle_id * 9 + 7] = top_points[i + 1].y;
-        triangle_data[triangle_id * 9 + 8] = top_points[i + 1].z;
+        triangles[triangle_id * 9 + 6] = top_points[i + 1].x;
+        triangles[triangle_id * 9 + 7] = top_points[i + 1].y;
+        triangles[triangle_id * 9 + 8] = top_points[i + 1].z;
 
         ++triangle_id;
     }
 
     for (int i = 1; i < N_perimeter - 1; ++i) {
-        triangle_data[triangle_id * 9] = bot_points[0].x;
-        triangle_data[triangle_id * 9 + 1] = bot_points[0].y;
-        triangle_data[triangle_id * 9 + 2] = bot_points[0].z;
+        triangles[triangle_id * 9] = bot_points[0].x;
+        triangles[triangle_id * 9 + 1] = bot_points[0].y;
+        triangles[triangle_id * 9 + 2] = bot_points[0].z;
 
-        triangle_data[triangle_id * 9 + 3] = bot_points[i].x;
-        triangle_data[triangle_id * 9 + 4] = bot_points[i].y;
-        triangle_data[triangle_id * 9 + 5] = bot_points[i].z;
+        triangles[triangle_id * 9 + 3] = bot_points[i].x;
+        triangles[triangle_id * 9 + 4] = bot_points[i].y;
+        triangles[triangle_id * 9 + 5] = bot_points[i].z;
 
-        triangle_data[triangle_id * 9 + 6] = bot_points[i + 1].x;
-        triangle_data[triangle_id * 9 + 7] = bot_points[i + 1].y;
-        triangle_data[triangle_id * 9 + 8] = bot_points[i + 1].z;
+        triangles[triangle_id * 9 + 6] = bot_points[i + 1].x;
+        triangles[triangle_id * 9 + 7] = bot_points[i + 1].y;
+        triangles[triangle_id * 9 + 8] = bot_points[i + 1].z;
 
         ++triangle_id;
     }
@@ -135,38 +136,50 @@ int main( void )
     for (int i = 0; i < N_perimeter; ++i) {
         int j = (i + 1) % N_perimeter;
 
-        triangle_data[triangle_id * 9] = bot_points[i].x;
-        triangle_data[triangle_id * 9 + 1] = bot_points[i].y;
-        triangle_data[triangle_id * 9 + 2] = bot_points[i].z;
+        triangles[triangle_id * 9] = bot_points[i].x;
+        triangles[triangle_id * 9 + 1] = bot_points[i].y;
+        triangles[triangle_id * 9 + 2] = bot_points[i].z;
 
-        triangle_data[triangle_id * 9 + 3] = bot_points[j].x;
-        triangle_data[triangle_id * 9 + 4] = bot_points[j].y;
-        triangle_data[triangle_id * 9 + 5] = bot_points[j].z;
+        triangles[triangle_id * 9 + 3] = bot_points[j].x;
+        triangles[triangle_id * 9 + 4] = bot_points[j].y;
+        triangles[triangle_id * 9 + 5] = bot_points[j].z;
 
-        triangle_data[triangle_id * 9 + 6] = top_points[i].x;
-        triangle_data[triangle_id * 9 + 7] = top_points[i].y;
-        triangle_data[triangle_id * 9 + 8] = top_points[i].z;
+        triangles[triangle_id * 9 + 6] = top_points[i].x;
+        triangles[triangle_id * 9 + 7] = top_points[i].y;
+        triangles[triangle_id * 9 + 8] = top_points[i].z;
 
         for (int x = triangle_id * 9; x < triangle_id * 9 + 9; ++x) {
-            printf("%f ", triangle_data[x]);
+            printf("%f ", triangles[x]);
         }
         printf("\n");
 
         ++triangle_id;
 
-        triangle_data[triangle_id * 9] = top_points[i].x;
-        triangle_data[triangle_id * 9 + 1] = top_points[i].y;
-        triangle_data[triangle_id * 9 + 2] = top_points[i].z;
+        triangles[triangle_id * 9] = top_points[i].x;
+        triangles[triangle_id * 9 + 1] = top_points[i].y;
+        triangles[triangle_id * 9 + 2] = top_points[i].z;
 
-        triangle_data[triangle_id * 9 + 3] = top_points[j].x;
-        triangle_data[triangle_id * 9 + 4] = top_points[j].y;
-        triangle_data[triangle_id * 9 + 5] = top_points[j].z;
+        triangles[triangle_id * 9 + 3] = top_points[j].x;
+        triangles[triangle_id * 9 + 4] = top_points[j].y;
+        triangles[triangle_id * 9 + 5] = top_points[j].z;
 
-        triangle_data[triangle_id * 9 + 6] = bot_points[j].x;
-        triangle_data[triangle_id * 9 + 7] = bot_points[j].y;
-        triangle_data[triangle_id * 9 + 8] = bot_points[j].z;
+        triangles[triangle_id * 9 + 6] = bot_points[j].x;
+        triangles[triangle_id * 9 + 7] = bot_points[j].y;
+        triangles[triangle_id * 9 + 8] = bot_points[j].z;
 
         ++triangle_id;
+    }
+
+    for (int i = 0; i < N_triangles * 3; ++i) {
+        float x = triangles[i * 3 + 0];
+        float y = triangles[i * 3 + 1];
+        float z = triangles[i * 3 + 2];
+
+        float r = (x + y + z) + R + H;
+        float b = R + H - (x + y + z);
+        colors[i * 3 + 0] = r / (r + b);
+        colors[i * 3 + 1] = 0;
+        colors[i * 3 + 2] = b / (r + b);
     }
 
 //    static const GLfloat trig[] = {
@@ -182,7 +195,12 @@ int main( void )
     GLuint vertexbuffer;
     glGenBuffers(1, &vertexbuffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(triangle_data), triangle_data, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(triangles), triangles, GL_STATIC_DRAW);
+
+    GLuint colorbuffer;
+    glGenBuffers(1, &colorbuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(colors), colors, GL_STATIC_DRAW);
 
     int iter = 0;
     float time_scale = 200;
@@ -198,7 +216,7 @@ int main( void )
         glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
         float t = iter / time_scale;
-        glm::vec3 cur_pos = glm::vec3(Rx * glm::cos(t + t_start), Ry * glm::sin(t + t_start), h_fly + 20 * glm::abs(glm::cos(t + t_h_start)));
+        glm::vec3 cur_pos = glm::vec3(Rx * glm::cos(t + t_start), Ry * glm::sin(t + t_start), h_fly + 20 * glm::cos(t + t_h_start));
 
         glm::mat4 cur_view = glm::lookAt(
                                     cur_pos,
@@ -214,6 +232,8 @@ int main( void )
         glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &cur_MVP[0][0]);
 
         glEnableVertexAttribArray(0);
+        glEnableVertexAttribArray(1);
+
         glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
         glVertexAttribPointer(
             0,
@@ -224,10 +244,22 @@ int main( void )
             (void*)0
         );
 
+        glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
+        glVertexAttribPointer(
+            1,                                // attribute. No particular reason for 1, but must match the layout in the shader.
+            3,                                // size
+            GL_FLOAT,                         // type
+            GL_FALSE,                         // normalized?
+            0,                                // stride
+            (void*)0                          // array buffer offset
+        );
+
+
         glDrawArrays(GL_TRIANGLES, 0, N_triangles * 3);
 
 
         glDisableVertexAttribArray(0);
+        glDisableVertexAttribArray(1);
 
         iter += 1;
 
