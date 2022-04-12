@@ -1,0 +1,12 @@
+#version 330 core
+
+// Ouput data
+out vec4 color;
+
+void main()
+{
+
+        // Output color = red
+        color.rgb = vec3(1,0,0);
+        color.a = 0.5;
+}
